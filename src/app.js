@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import AppRouter from "./routers/AppRouter";
 import configureStore from "./store/configureStore";
 import getVisibleExpenses from "./selectors/expenses";
-import { addExpense } from "./actions/expenses";
+import { startSetExpenses } from "./actions/expenses";
 import { setTextFilter, sortByAmount } from "./actions/filters";
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
@@ -22,10 +22,10 @@ const store = configureStore();
 // store.dispatch(addExpense({ description: 'Gas Bill', createdAt: 1000 }));
 // store.dispatch(addExpense({ description: 'Rent', amount: 1895600 }));
 
-const state = store.getState();
-console.log(state);
-const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
-console.log(visibleExpenses);
+// const state = store.getState();
+// console.log(state);
+// const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+// console.log(visibleExpenses);
 
 const jsx = (
     <Provider store={store}>
@@ -34,5 +34,13 @@ const jsx = (
 );
 
 ReactDOM.render((
-    jsx
+    <p>Loading...</p>
 ), document.getElementById('app'));
+
+store.dispatch(startSetExpenses()).then(() => {
+    ReactDOM.render((
+        jsx
+    ), document.getElementById('app'));
+});
+
+
